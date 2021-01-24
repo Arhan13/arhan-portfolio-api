@@ -1,4 +1,4 @@
-const request = require('request');
+const request = require("request");
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const config = require("../config/dev");
@@ -54,42 +54,41 @@ exports.checkRole = (role) => (req, res, next) => {
 
 exports.getAccessToken = (callback) => {
   const options = {
-    method: 'POST',
+    method: "POST",
     url: config.AUTH0_TOKEN_URL,
-    headers: {'content-type': 'application/json'},
+    headers: { "content-type": "application/json" },
     form: {
-      grant_type: 'client_credentials',
+      grant_type: "client_credentials",
       client_id: config.AUTH0_CLIENT_ID,
       client_secret: config.AUTH0_CLIENT_SECRET,
-      audience: config.AUTH0_AUDIENCE
-    }
-  }
+      audience: config.AUTH0_AUDIENCE,
+    },
+  };
   return new Promise((resolve, reject) => {
     request(options, (error, res, body) => {
       if (error) {
-        return reject(new Error(error))
+        return reject(new Error(error));
       }
-      resolve(body ? JSON.parse(body) : '')
-    })
-  })
-}
+      resolve(body ? JSON.parse(body) : "");
+    });
+  });
+};
 
-
-exports.getAuth0User = accessToken => userId => {
+exports.getAuth0User = (accessToken) => (userId) => {
   //console.log(accessToken, userId)
   const options = {
-    method: 'GET',
+    method: "GET",
     url: `${config.AUTH0_DOMAIN}/api/v2/users/${userId}?fields=name,picture,user_id`,
-    headers: {authorization: `Bearer ${accessToken}`}
+    headers: { authorization: `Bearer ${accessToken}` },
   };
 
   return new Promise((resolve, reject) => {
     request(options, (error, res, body) => {
       if (error) {
-        return reject(new Error(error))
+        return reject(new Error(error));
       }
 
-      resolve(body ? JSON.parse(body) : '')
-    })
-  })
-}
+      resolve(body ? JSON.parse(body) : "");
+    });
+  });
+};

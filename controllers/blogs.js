@@ -11,11 +11,12 @@ exports.getBlogs = async (req, res) => {
   const { access_token } = await getAccessToken();
   const blogWithUsers = [];
   const authors = {};
-  for(let blog of blogs){
-    const author = authors[blog.user_Id] || await getAuth0User(access_token)(blog.userId);
+  for (let blog of blogs) {
+    const author =
+      authors[blog.user_Id] || (await getAuth0User(access_token)(blog.userId));
     //key : value
     authors[author.user_id] = author;
-    blogWithUsers.push({blog, author});
+    blogWithUsers.push({ blog, author });
   }
   return res.json(blogWithUsers);
 };
@@ -38,8 +39,8 @@ exports.getBlogBySlug = async (req, res) => {
   const blog = await Blog.findOne({ slug: req.params.slug });
   const { access_token } = await getAccessToken();
   const author = await getAuth0User(access_token)(blog.userId);
-  
-  return res.json({blog, author});
+
+  return res.json({ blog, author });
 };
 
 exports.createBlog = async (req, res) => {
