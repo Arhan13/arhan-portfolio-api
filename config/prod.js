@@ -7,7 +7,4 @@ module.exports = {
     AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE,
     AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
   };
-
-
-  //mongodb+srv://Arhan:Cars@001601@cluster0.4p3qr.mongodb.net/arhan-portfolio-api-production?retryWrites=true&w=majority
   
